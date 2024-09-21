@@ -39,6 +39,10 @@ public struct PrayerTimes {
     public let maghrib: Date
     public let isha: Date
 
+    // Sunset can be only accessed only by this variable.
+    // It is not directly mapped to any `Prayer`.
+    public var sunset: Date
+
     public let coordinates: Coordinates
     public let date: DateComponents
     public let calculationParameters: CalculationParameters
@@ -179,6 +183,8 @@ public struct PrayerTimes {
         self.isha = isha.addingTimeInterval(calculationParameters.adjustments.isha.timeInterval)
             .addingTimeInterval(calculationParameters.methodAdjustments.isha.timeInterval)
             .roundedMinute(rounding: calculationParameters.rounding)
+
+        self.sunset = sunsetDate
     }
 
     public func currentPrayer(at time: Date = Date()) -> Prayer? {
